@@ -16,6 +16,12 @@ output file next to it.
 ├── Panama/    # The Canal Knows Too Much  (NLP, Medium)
 │   └── main.py
 │   └── README.md
+├── Fiji/    # Walu Season  (Reinforcement Learning, Easy)
+│   └── main.py
+│   └── README.md
+├── Australia/    # The Drunken Mario Adventures  (Reinforcement Learning, Medium)
+│   └── Mario_coins_results.xlsx
+│   └── README.md
 └── README.md
 ```
 
