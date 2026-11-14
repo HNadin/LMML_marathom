@@ -8,7 +8,6 @@ def norm(s):
     s = unicodedata.normalize("NFKD", s.lower())
     return "".join(c for c in s if not unicodedata.combining(c))
 
-# 1. вопрос -> (атрибут, объект)
 pats = [r"^state the (.+?) of (.+?)\.?$",
         r"^what is the (.+?) of (.+?)\?$",
         r"^tell me the (.+?) of (.+?)\.?$",
@@ -19,25 +18,39 @@ def parse(q):
         m = re.match(p, q.strip(), re.I)
         if m: return norm(m.group(1)), norm(m.group(2))
 
-# 2. только записи с вопросом-ответом
 qa = [c["text"] for c in d["corpus"]
       if c["text"].startswith(("Canal operations log", "Registro del canal"))]
 
-# 3. утечка: в записи есть и объект, и атрибут (для испанских - после перевода)
-def translate(t):
+def translate_and_normalize(t):
     t = norm(t)
-    for es, en in G.items():
+    for es, en in sorted(G.items(), key=lambda item: len(item[0]), reverse=True):
         t = t.replace(norm(es), en)
+
+    # Нормализуем испанские десятичные дроби
+    t = re.sub(r'(\d+),(\d+)', r'\1.\2', t)
     return t
 
 leaked = []
 for b in d["benchmark"]:
     attr, ent = parse(b["question"])
+    gold = norm(b["gold"])
+
+    # Регулярки с границами слов (\b), чтобы "panamax" не находил "neopanamax"
+    ent_pattern = r'\b' + re.escape(ent) + r'\b'
+    attr_pattern = r'\b' + re.escape(attr) + r'\b'
+    gold_pattern = r'\b' + re.escape(gold) + r'\b'
+
     for t in qa:
-        nt, tt = norm(t), translate(t)
-        if ent in nt and (attr in nt or attr in tt):
-            leaked.append(b["id"]); break
-print(len(leaked), leaked)
+        nt = norm(t)
+        tt = translate_and_normalize(t)
+
+        if re.search(ent_pattern, nt):
+            if (re.search(attr_pattern, nt) or
+                    re.search(attr_pattern, tt) or
+                    re.search(gold_pattern, nt) or
+                    re.search(gold_pattern, tt)):
+                leaked.append(b["id"])
+                break
 
 excluded = set(leaked)
 remaining = [i for i in correct if i not in excluded]
