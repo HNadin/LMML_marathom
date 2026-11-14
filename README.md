@@ -28,6 +28,9 @@ output file next to it.
 ├── Rwanda/    # The Drying Floor at Karongi  (General AI, Easy)
 │   └── graph.py
 │   └── README.md
+├── Angola/    # The Waterline Replay  (General AI, Medium)
+│   └── main.py
+│   └── README.md
 └── README.md
 ```
 
