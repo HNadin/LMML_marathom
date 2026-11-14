@@ -27,15 +27,25 @@ class Strategy:
         self.n_casts = n_casts
         self.casts = [0] * n_spots      # how many times each spot was fished
         self.total = [0.0] * n_spots    # kg caught at each spot
+        self.current_cast = 0
+
+        # Explore each spot 30 times (300 total exploration casts).
+        # This is robust enough to hit the high-yield school spot multiple times,
+        # ensuring its empirical average cleanly beats the steady spots.
+        self.explore_limit = min(30, max(1, n_casts // (3 * n_spots)))
 
     def choose(self):
-        # Try every spot once...
-        for spot in range(self.n_spots):
-            if self.casts[spot] == 0:
-                return spot
-        # ...then always the best average so far.
-        averages = [self.total[s] / self.casts[s] for s in range(self.n_spots)]
-        return max(range(self.n_spots), key=lambda s: averages[s])
+        # 1. Exploration phase: round-robin across all spots
+        if self.current_cast < self.n_spots * self.explore_limit:
+            spot = self.current_cast % self.n_spots
+
+        # 2. Exploitation phase: exclusively play the highest average spot
+        else:
+            averages = [self.total[s] / max(1, self.casts[s]) for s in range(self.n_spots)]
+            spot = max(range(self.n_spots), key=lambda s: averages[s])
+
+        self.current_cast += 1
+        return spot
 
     def update(self, spot, catch):
         self.casts[spot] += 1
