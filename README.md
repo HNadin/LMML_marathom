@@ -25,6 +25,9 @@ output file next to it.
 ├── Nigeria/    # The Gángan Never Lies  (General AI, Easy)
 │   └── main.py
 │   └── README.md
+├── Rwanda/    # The Drying Floor at Karongi  (General AI, Easy)
+│   └── graph.py
+│   └── README.md
 └── README.md
 ```
 
