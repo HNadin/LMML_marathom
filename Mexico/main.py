@@ -1,4 +1,7 @@
 import csv
+import glob
+import os
+import shutil
 import json
 import re
 import sys
@@ -65,7 +68,32 @@ def main(inp, out):
         json.dump({"matches": matches}, f, ensure_ascii=False)
 
 
+def find_input():
+    here = os.path.dirname(os.path.abspath(__file__))
+    for d in (os.getcwd(), here):
+        for name in ("test-input.csv", "train-input.csv"):
+            p = os.path.join(d, name)
+            if os.path.exists(p):
+                return p
+        for p in sorted(glob.glob(os.path.join(d, "*-input.csv"))):
+            return p
+    return "test-input.csv"
+
+
 if __name__ == "__main__":
-    inp = sys.argv[1] if len(sys.argv) > 1 else "train-input.csv"
-    out = sys.argv[2] if len(sys.argv) > 2 else "output.json"
+    inp = sys.argv[1] if len(sys.argv) > 1 else find_input()
+    if len(sys.argv) > 2:
+        out = sys.argv[2]
+    else:
+        base = os.path.basename(inp)
+        name = base.replace("-input.csv", "-output.json") if base.endswith("-input.csv") else "test-output.json"
+        out = os.path.join(os.path.dirname(os.path.abspath(inp)), name)
     main(inp, out)
+
+    for d in {os.getcwd(), os.path.dirname(os.path.abspath(__file__))}:
+        extra = os.path.join(d, os.path.basename(out))
+        if os.path.abspath(extra) != os.path.abspath(out):
+            try:
+                shutil.copyfile(out, extra)
+            except OSError:
+                pass
