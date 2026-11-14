@@ -13,6 +13,9 @@ output file next to it.
 ├── United States/    # The Great American Token Mystery  (NLP, Easy)
 │   └── main.py
 │   └── README.md
+├── Panama/    # The Canal Knows Too Much  (NLP, Medium)
+│   └── main.py
+│   └── README.md
 └── README.md
 ```
 
