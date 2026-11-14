@@ -22,6 +22,9 @@ output file next to it.
 ├── Australia/    # The Drunken Mario Adventures  (Reinforcement Learning, Medium)
 │   └── Mario_coins_results.xlsx
 │   └── README.md
+├── Nigeria/    # The Gángan Never Lies  (General AI, Easy)
+│   └── main.py
+│   └── README.md
 └── README.md
 ```
 
