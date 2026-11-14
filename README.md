@@ -31,6 +31,9 @@ output file next to it.
 ├── Angola/    # The Waterline Replay  (General AI, Medium)
 │   └── main.py
 │   └── README.md
+├── Morocco/    # The Dispatch Desk of Fez  (General AI, Medium)
+│   └── main.py
+│   └── README.md
 └── README.md
 ```
 
