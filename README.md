@@ -7,13 +7,16 @@ output file next to it.
 
 ```
 .
-├── Mexico/           # Ruta de las Identidades  (NLP, Easy)
+├── Mexico/  # Ruta de las Identidades  (NLP, Easy)
 │   └── main.py
 │   └── README.md
-├── United States/    # The Great American Token Mystery  (NLP, Easy)
+├── United States/  # The Great American Token Mystery  (NLP, Easy)
 │   └── main.py
 │   └── README.md
 ├── Panama/    # The Canal Knows Too Much  (NLP, Medium)
+│   └── main.py
+│   └── README.md
+├── Costa Rica/    # Pura Vida, No PII  (NLP, Medium)
 │   └── main.py
 │   └── README.md
 ├── Fiji/    # Walu Season  (Reinforcement Learning, Easy)
@@ -22,7 +25,7 @@ output file next to it.
 ├── Australia/    # The Drunken Mario Adventures  (Reinforcement Learning, Medium)
 │   └── Mario_coins_results.xlsx
 │   └── README.md
-├── Papua New Guinea/    # Bihainim Angkol (Follow Your Uncle)  (Reinforcement Learning, Medium)
+├── Papua New Guinea/ # Bihainim Angkol (Follow Your Uncle)  (Reinforcement Learning, Medium)
 │   └── main.py
 │   └── README.md
 ├── Nigeria/    # The Gángan Never Lies  (General AI, Easy)
